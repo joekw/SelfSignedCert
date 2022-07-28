@@ -3,7 +3,6 @@
 import Foundation
 import Security
 import IDZSwiftCommonCrypto
-import SecurityExtensions
 
 extension SecIdentity
 {

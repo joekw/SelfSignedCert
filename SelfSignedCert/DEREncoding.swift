@@ -1,7 +1,6 @@
 //  Copyright © 2016 Stefan van den Oord. All rights reserved.
 
 import Foundation
-import SwiftBytes
 
 extension NSNull {
     func toDER() -> [UInt8] {
@@ -18,7 +17,7 @@ extension Bool {
 
 extension UnsignedInteger {
     func encodeForDER() -> [UInt8] {
-        var bytes : [UInt8] = SwiftBytes.bytes(UInt64(self)).removeLeadingZeros()
+        var bytes : [UInt8] = bytes(UInt64(self)).removeLeadingZeros()
         if (bytes[0] & 0x80) == 0x80 {
             bytes = [0x00] + bytes
         }
@@ -37,7 +36,7 @@ extension BinaryInteger {
         else {
             let bitPattern = ~(-Int64(self)) + 1
             let twosComplement = UInt64(bitPattern:bitPattern)
-            let bytes : [UInt8] = SwiftBytes.bytes(twosComplement).ensureSingleLeadingOneBit()
+            let bytes : [UInt8] = bytes(twosComplement).ensureSingleLeadingOneBit()
             return writeDER(tag: 2, constructed: false, bytes: bytes)
         }
     }

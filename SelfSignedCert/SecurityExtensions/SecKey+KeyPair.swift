@@ -12,9 +12,11 @@ extension SecKey {
      * - returns: The generated key pair.
      * - throws: A `SecKeyError` when something went wrong.
      */
-    public static func generateKeyPair(ofSize bits:UInt) throws -> KeyPair {
-        let pubKeyAttrs = [ kSecAttrIsPermanent as String: true ]
-        let privKeyAttrs = [ kSecAttrIsPermanent as String: true ]
+    public static func generateKeyPair(ofSize bits:UInt, tag: String) throws -> KeyPair {
+        let pubKeyAttrs: NSDictionary = [ kSecAttrIsPermanent as String: true,
+                                          kSecAttrApplicationTag as String: tag ]
+        let privKeyAttrs: NSDictionary = [ kSecAttrIsPermanent as String: true,
+                                           kSecAttrApplicationTag as String: tag ]
         let params: NSDictionary = [ kSecAttrKeyType as String : kSecAttrKeyTypeRSA as String,
                        kSecAttrKeySizeInBits as String : bits,
                        kSecPublicKeyAttrs as String : pubKeyAttrs,
@@ -28,9 +30,6 @@ extension SecKey {
         guard let pub = pubKey, let priv = privKey else {
             throw SecKeyError.generateKeyPairFailed(osStatus: nil)
         }
-
-        try changeKeyTag(priv)
-        try changeKeyTag(pub)
 
         return (priv, pub)
     }

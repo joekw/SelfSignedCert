@@ -18,6 +18,7 @@ extension SecIdentity
      */
     public static func create(
         ofSize bits:UInt = 3072,
+        tag: String,
         subjectCommonName name:String,
         subjectEmailAddress email:String,
         validFrom:Date? = nil,
@@ -26,9 +27,8 @@ extension SecIdentity
         let privKey: SecKey
         let pubKey: SecKey
         do {
-            (privKey,pubKey) = try SecKey.generateKeyPair(ofSize: bits)
-        }
-        catch {
+            (privKey,pubKey) = try SecKey.generateKeyPair(ofSize: bits, tag: tag)
+        } catch {
             return nil
         }
         let certRequest = CertificateRequest(

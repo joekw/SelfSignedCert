@@ -72,7 +72,7 @@ public struct CertificateRequest {
         return key.keyData
     }
     
-    func selfSign(withPrivateKey key:SecKey) -> [UInt8]? {
+    public func selfSign(withPrivateKey key:SecKey) -> [UInt8]? {
         guard let info = self.info(usingSubjectAsIssuer:true) else {
             return nil
         }

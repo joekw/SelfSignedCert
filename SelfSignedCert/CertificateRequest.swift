@@ -6,9 +6,9 @@ import Security
 /**
  * Option set used for specifying key usage in certificate requests.
  */
-struct KeyUsage : OptionSet {
-    let rawValue:  UInt16
-    init(rawValue: UInt16) { self.rawValue = rawValue }
+public struct KeyUsage : OptionSet {
+    public let rawValue:  UInt16
+    public init(rawValue: UInt16) { self.rawValue = rawValue }
     
     static let DigitalSignature   = KeyUsage(rawValue: 0x80)
     static let NonRepudiation     = KeyUsage(rawValue: 0x40)
@@ -22,14 +22,14 @@ struct KeyUsage : OptionSet {
     static let Unspecified        = KeyUsage(rawValue: 0xFFFF)        // Returned if key-usage extension is not present
 }
 
-func ==(lhs: KeyUsage, rhs: KeyUsage) -> Bool {
+public func ==(lhs: KeyUsage, rhs: KeyUsage) -> Bool {
     return lhs.rawValue == rhs.rawValue
 }
 
 /**
  * Represents a certificate request.
  */
-struct CertificateRequest {
+public struct CertificateRequest {
     var publicKey : SecKey
     var subjectCommonName: String
     var subjectEmailAddress: String
@@ -39,7 +39,7 @@ struct CertificateRequest {
     var publicKeyDerEncoder: ((SecKey) -> [UInt8]?)?
     var keyUsage: KeyUsage
     
-    init(forPublicKey key:SecKey, subjectCommonName:String, subjectEmailAddress:String, keyUsage:KeyUsage,
+    public init(forPublicKey key:SecKey, subjectCommonName:String, subjectEmailAddress:String, keyUsage:KeyUsage,
                       validFrom:Date? = nil, validTo:Date? = nil, serialNumber:UInt64? = nil) {
         self.publicKey = key
         self.subjectCommonName = subjectCommonName

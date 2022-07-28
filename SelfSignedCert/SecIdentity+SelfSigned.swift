@@ -21,13 +21,18 @@ extension SecIdentity
         subjectCommonName name:String,
         subjectEmailAddress email:String,
         validFrom:Date? = nil,
-        validTo:Date? = nil,
-        privateKey: SecKey,
-        publicKey: SecKey
+        validTo:Date? = nil
     ) -> SecIdentity? {
-
+        let privKey: SecKey
+        let pubKey: SecKey
+        do {
+            (privKey,pubKey) = try SecKey.generateKeyPair(ofSize: bits)
+        }
+        catch {
+            return nil
+        }
         let certRequest = CertificateRequest(
-            forPublicKey: publicKey,
+            forPublicKey:pubKey,
             subjectCommonName: name,
             subjectEmailAddress: email,
             keyUsage: [.DigitalSignature, .DataEncipherment],
@@ -35,7 +40,7 @@ extension SecIdentity
             validTo: validTo
         )
 
-        guard let signedBytes = certRequest.selfSign(withPrivateKey: privateKey),
+        guard let signedBytes = certRequest.selfSign(withPrivateKey:privKey),
             let signedCert = SecCertificateCreateWithData(nil, Data(signedBytes) as CFData) else {
             return nil
         }
@@ -45,7 +50,7 @@ extension SecIdentity
             return nil
         }
 
-        return findIdentity(forPrivateKey: privateKey, publicKey: publicKey)
+        return findIdentity(forPrivateKey:privKey, publicKey:pubKey)
     }
     
     /**

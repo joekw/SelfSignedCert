@@ -36,7 +36,7 @@ public struct CertificateRequest {
     var serialNumber: UInt64
     var validFrom: Date
     var validTo: Date
-    var publicKeyDerEncoder: ((SecKey) -> [UInt8]?)?
+    var publicKeyDerEncoder: ((SecKey) -> [UInt8])?
     var keyUsage: KeyUsage
     
     public init(forPublicKey key:SecKey, subjectCommonName:String, subjectEmailAddress:String, keyUsage:KeyUsage,
@@ -65,11 +65,11 @@ public struct CertificateRequest {
         }
         self.keyUsage = keyUsage
         
-        publicKeyDerEncoder = encodePublicKey!
+        publicKeyDerEncoder = encodePublicKey
     }
     
-    func encodePublicKey(_ key:SecKey) -> [UInt8]? {
-        return key.keyData
+    func encodePublicKey(_ key:SecKey) -> [UInt8] {
+        return key.keyData!
     }
     
     public func selfSign(withPrivateKey key:SecKey) -> [UInt8]? {

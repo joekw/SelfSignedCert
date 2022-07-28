@@ -65,7 +65,7 @@ public struct CertificateRequest {
         }
         self.keyUsage = keyUsage
         
-        publicKeyDerEncoder = encodePublicKey
+        publicKeyDerEncoder = encodePublicKey!
     }
     
     func encodePublicKey(_ key:SecKey) -> [UInt8]? {

@@ -10,16 +10,16 @@ public struct KeyUsage : OptionSet {
     public let rawValue:  UInt16
     public init(rawValue: UInt16) { self.rawValue = rawValue }
     
-    static let DigitalSignature   = KeyUsage(rawValue: 0x80)
-    static let NonRepudiation     = KeyUsage(rawValue: 0x40)
-    static let KeyEncipherment    = KeyUsage(rawValue: 0x20)
-    static let DataEncipherment   = KeyUsage(rawValue: 0x10)
-    static let KeyAgreement       = KeyUsage(rawValue: 0x08)
-    static let KeyCertSign        = KeyUsage(rawValue: 0x04)
-    static let CRLSign            = KeyUsage(rawValue: 0x02)
-    static let EncipherOnly       = KeyUsage(rawValue: 0x01)
-    static let DecipherOnly       = KeyUsage(rawValue: 0x100)
-    static let Unspecified        = KeyUsage(rawValue: 0xFFFF)        // Returned if key-usage extension is not present
+    public static let DigitalSignature   = KeyUsage(rawValue: 0x80)
+    public static let NonRepudiation     = KeyUsage(rawValue: 0x40)
+    public static let KeyEncipherment    = KeyUsage(rawValue: 0x20)
+    public static let DataEncipherment   = KeyUsage(rawValue: 0x10)
+    public static let KeyAgreement       = KeyUsage(rawValue: 0x08)
+    public static let KeyCertSign        = KeyUsage(rawValue: 0x04)
+    public static let CRLSign            = KeyUsage(rawValue: 0x02)
+    public static let EncipherOnly       = KeyUsage(rawValue: 0x01)
+    public static let DecipherOnly       = KeyUsage(rawValue: 0x100)
+    public static let Unspecified        = KeyUsage(rawValue: 0xFFFF)        // Returned if key-usage extension is not present
 }
 
 public func ==(lhs: KeyUsage, rhs: KeyUsage) -> Bool {

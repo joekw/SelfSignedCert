@@ -17,9 +17,12 @@ extension SecKey {
     public var keyData: [UInt8]? {
         let query = [ kSecValueRef as String : self, kSecReturnData as String : true ] as [String : Any]
         var out: AnyObject?
-        guard errSecSuccess == SecItemCopyMatching(query as CFDictionary, &out) else {
+        let result = SecItemCopyMatching(query as CFDictionary, &out)
+
+        guard result == errSecSuccess else {
             return nil
         }
+
         guard let data = out as? Data else {
             return nil
         }
